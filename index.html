@@ -10,8 +10,21 @@
   </head>
 
   <body ng-controller="SearchController">
-    <div ng-repeat="marker in markers">{{marker}}</div>
-    <div id="map"></div>
+    
+    <div id="searchbar">
+      <strong>Search:</strong>
+    </div>
+    
+    <div id="maplistwrapper">
+      <div id="searchlist">
+        <p><strong>Key Locations</strong></p>
+        <ol ng-repeat="marker in markers">
+          <li>{{marker}}</li>
+        </ol>
+      </div>
+      <div id="map"></div>
+    </div>
+    
     <script src="https://maps.googleapis.com/maps/api/js?callback=initMap"
         async defer></script>
     <script src="scripts/map.js"></script>

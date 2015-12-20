@@ -5,5 +5,5 @@ var locations = [
 	{title: 'The Great Barrier Reef', lat: -18.2861, lng: 147.7000},
 	{title: 'Yellowstone Caldera', lat: 44.4000, lng: -110.7000},
 	{title: 'Nazca Lines', lat: -14.7167, lng: -75.1333},
-	{title: 'Dinosaur Provincial Park', lat: 50.7617, lng: -111.4850}
+	{title: 'Dinosaur Provincial Park', lat: 50.7617, lng: -111.4850},
 ];
