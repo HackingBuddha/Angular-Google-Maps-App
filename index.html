@@ -11,12 +11,12 @@
 
   <body ng-controller="SearchController">
     
-    <input type="searchfield" id="searchfield" placeholder="search">
+    <input type="searchfield" id="searchfield" placeholder="search" ng-model="searchtext">
     
     <div id="maplistwrapper">
       <div id="searchlist">
         <p><strong>Key Locations</strong></p>
-        <ol ng-repeat="marker in markers">
+        <ol ng-repeat="marker in markers | filter: searchtext">
           <li>{{marker}}</li>
         </ol>
       </div>
