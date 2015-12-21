@@ -17,7 +17,7 @@ app.controller('SearchController', function($scope) {
 
 	  	// Create the new map
 	  	$scope.map = new google.maps.Map(document.getElementById('map'), {
-	    	center: locations[0],
+	    	center: {lat: 0, lng: 0},
 	    	zoom: 2
 	  	});
   
@@ -41,8 +41,6 @@ app.controller('SearchController', function($scope) {
 		    	$scope.infoWindows[this.index].open($scope.map, $scope.markers[this.index]);
 		    	$scope.map.panTo($scope.markers[this.index].getPosition());
 		    });
-
-		   // $scope.markers[i] = markers[i];
   		}
 	}
 
