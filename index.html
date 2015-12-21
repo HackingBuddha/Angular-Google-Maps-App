@@ -16,7 +16,7 @@
     <div id="maplistwrapper">
       <div id="searchlist">
         <p><strong>Key Locations</strong></p>
-        <ol ng-repeat="marker in markers | filter: searchtext">
+        <ol ng-repeat="marker in markers | filter: searchtext | orderBy : title">
           <li>{{marker}}</li>
         </ol>
       </div>
@@ -25,8 +25,8 @@
     
     <script src="https://maps.googleapis.com/maps/api/js?callback=initMap"
         async defer></script>
-    <script src="scripts/map.js"></script>
     <script src="scripts/locations.js"></script>
+    <script src="scripts/map.js"></script>
     <script src="scripts/app.js"></script>
   </body>
 
