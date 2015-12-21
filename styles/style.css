@@ -4,10 +4,11 @@ html, body {
 	padding: 0;
 }
 
-#searchbar {
+#searchfield {
 	padding: 0;
 	margin: 0;
 	height: 5%;
+	width: 100%;
 }
 
 #maplistwrapper {
