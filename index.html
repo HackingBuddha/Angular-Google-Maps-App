@@ -1,31 +1,31 @@
 <!DOCTYPE html>
 <html ng-app="app">
 
-  <head>
-    <title>Magical places to Visit</title>
-    <meta name="viewport" content="initial-scale=1.0">
-    <meta charset="utf-8">
-    <script src="scripts/locations.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?callback=initMap" defer></script>
-    <script src="scripts/map.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.8/angular.min.js"></script>
-    <script src="scripts/app.js"></script>
-    <link rel="stylesheet" type="text/css" href="styles/style.css" media="screen" />
-  </head>
+	<head>
+		<title>Magical places to Visit</title>
+	    <meta name="viewport" content="initial-scale=1.0">
+	    <meta charset="utf-8">
+	    <script src="scripts/locations.js"></script>
+	    <script src="https://maps.googleapis.com/maps/api/js?callback=initMap" defer></script>
+	    <script src="scripts/map.js"></script>
+	    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.8/angular.min.js"></script>
+	    <script src="scripts/app.js"></script>
+	    <link rel="stylesheet" type="text/css" href="styles/style.css" media="screen" />
+	</head>
 
-  <body ng-controller="mainController">
-    
-    <input type="searchfield" id="searchfield" placeholder="search" ng-model="searchtext">
-    
-    <div id="maplistwrapper">
-      <div id="searchlist">
-        <p><strong>Key Locations</strong></p>
-        <ol ng-repeat="location in locations | filter: searchtext">
-          <li><a href="#">{{location}}</a></li>
-        </ol>
-      </div>
-      <div id="map"></div>
-    </div>
-  </body>
+	<body ng-controller="mainController">
 
+		<input type="searchfield" id="searchfield" placeholder="search" ng-model="searchtext">
+		<div id="maplistwrapper">
+			<div id="searchlist">
+				<p><strong>Key Locations</strong></p>
+				<ol ng-repeat="location in locations | filter: searchtext">
+					<li><a href="#">{{location}}</a></li>
+				</ol>
+			</div>
+
+			<div id="map"></div>
+			
+		</div>
+	</body>
 </html>
