@@ -1,7 +1,21 @@
+// Create variables to store map data
 var map;
 var markers = [];
 var infoWindows = [];
+var markerClick = function() {
+    infoWindows[this.index].open(map, markers[this.index]);
+    map.panTo(markers[this.index].getPosition());
+};
+var toggleBounce = function() {
+    if (markers[this.index].getAnimation() !== null) {
+        markers[this.index].setAnimation(null);
+    } else {
+        markers[this.index].setAnimation(google.maps.Animation.BOUNCE);
+    }
+};
 
+
+// Create the callback for Google Maps API
 initMap = function() {
 
   // Create the new map
@@ -18,6 +32,7 @@ initMap = function() {
             title: locations[i].title,
         });
 
+        // Create indexes for markers
         markers[i].index = i;
 
         // Create info windows
@@ -25,10 +40,8 @@ initMap = function() {
             content: locations[i].title
         });
 
-        // Create Info Window onClick listeners
-        markers[i].addListener('click', function() {
-            infoWindows[this.index].open(map, markers[this.index]);
-            map.panTo(markers[this.index].getPosition());
-        });
+        // Create onClick listeners
+        markers[i].addListener('click', markerClick);
+        markers[i].addListener('click', toggleBounce);
     }
 };
