@@ -17,14 +17,14 @@ app.controller('mainController', function($scope, $timeout) {
 	$scope.markerClick = function() {
 		self = this.index;
 		$scope.activateMarker(self);
-		$scope.toggleBounce(self);
+		$scope.toggleAnimation(self);
 	};
 
 	// Function that is going to be called on click of items in the search list
 	$scope.listClick = function($index) {
 		self = $index;
 		$scope.activateMarker(self);
-		$scope.toggleBounce(self);
+		$scope.toggleAnimation(self);
 	};
 
 	// Common functionality for both Click functions
@@ -34,12 +34,11 @@ app.controller('mainController', function($scope, $timeout) {
 	};
 
 	// A function to toggle marker animation
-	$scope.toggleBounce = function(self) {
-    	if ($scope.markers[self].getAnimation() !== null) {
-        	$scope.markers[self].setAnimation(null);
-    	} else {
-        	$scope.markers[self].setAnimation(google.maps.Animation.BOUNCE);
+	$scope.toggleAnimation = function(self) {
+		for (i = 0; i < $scope.markers.length; i++) {
+        	$scope.markers[i].setAnimation(null);
     	}
+    	$scope.markers[self].setAnimation(google.maps.Animation.BOUNCE);
 	};
 
 	// Function to bind markers titles to locations array
