@@ -17,12 +17,14 @@ app.controller('mainController', function($scope, $timeout) {
 	$scope.markerClick = function() {
 		self = this.index;
 		$scope.activateMarker(self);
+		$scope.toggleBounce(self);
 	};
 
 	// Function that is going to be called on click of items in the search list
 	$scope.listClick = function($index) {
 		self = $index;
 		$scope.activateMarker(self);
+		$scope.toggleBounce(self);
 	};
 
 	// Common functionality for both Click functions
@@ -32,11 +34,11 @@ app.controller('mainController', function($scope, $timeout) {
 	};
 
 	// A function to toggle marker animation
-	$scope.toggleBounce = function() {
-    	if ($scope.markers[this.index].getAnimation() !== null) {
-        	$scope.markers[this.index].setAnimation(null);
+	$scope.toggleBounce = function(self) {
+    	if ($scope.markers[self].getAnimation() !== null) {
+        	$scope.markers[self].setAnimation(null);
     	} else {
-        	$scope.markers[this.index].setAnimation(google.maps.Animation.BOUNCE);
+        	$scope.markers[self].setAnimation(google.maps.Animation.BOUNCE);
     	}
 	};
 
@@ -79,7 +81,6 @@ app.controller('mainController', function($scope, $timeout) {
 
 	        // Create marker click listeners on the map
         	$scope.markers[i].addListener('click', $scope.markerClick);
-        	$scope.markers[i].addListener('click', $scope.toggleBounce);
     	}
 	};
 });
