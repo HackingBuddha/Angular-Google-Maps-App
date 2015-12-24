@@ -18,7 +18,7 @@
 			<div id="searchlist">
 				<p><strong>Key Locations</strong></p>
 				<ol ng-repeat="location in locations | filter: searchtext">
-					<li ng-click="isClicked($index)"><a href="#">{{location}}</a></li>
+					<li ng-click="listClick($index)"><a href="#">{{location}}</a></li>
 				</ol>
 			</div>
 

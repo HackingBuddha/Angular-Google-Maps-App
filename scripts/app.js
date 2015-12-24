@@ -15,10 +15,22 @@ app.controller('mainController', function($scope, $timeout) {
 
 	// Function that's going to be called when a marker is clicked on a map
 	$scope.markerClick = function() {
-    	$scope.infoWindows[this.index].open($scope.map, $scope.markers[this.index]);
-    	$scope.map.panTo($scope.markers[this.index].getPosition());
+		self = this.index;
+		$scope.activateMarker(self);
 	};
-	
+
+	// Function that is going to be called on click of items in the search list
+	$scope.listClick = function($index) {
+		self = $index;
+		$scope.activateMarker(self);
+	};
+
+	// Common functionality for both Click functions
+	$scope.activateMarker = function(self) {
+		$scope.infoWindows[self].open($scope.map, $scope.markers[self]);
+    	$scope.map.panTo($scope.markers[self].getPosition());
+	};
+
 	// A function to toggle marker animation
 	$scope.toggleBounce = function() {
     	if ($scope.markers[this.index].getAnimation() !== null) {
@@ -26,13 +38,6 @@ app.controller('mainController', function($scope, $timeout) {
     	} else {
         	$scope.markers[this.index].setAnimation(google.maps.Animation.BOUNCE);
     	}
-	};
-
-	// Function that is going to be called on click of items in the search list
-	$scope.isClicked = function($index) {
-		self = $index;
-    	$scope.infoWindows[self].open($scope.map, $scope.markers[self]);
-    	$scope.map.panTo($scope.markers[self].getPosition());
 	};
 
 	// Function to bind markers titles to locations array
