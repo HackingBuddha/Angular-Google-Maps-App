@@ -11,30 +11,43 @@ app.controller('mainController', function($scope, $timeout) {
 	$scope.markers = [];
 	$scope.infoWindows = [];
 	$scope.locations = [];
+	$scope.clicked = [];
 
+	// Function that's going to be called when a marker is clicked on a map
 	$scope.markerClick = function() {
-    $scope.infoWindows[this.index].open($scope.map, $scope.markers[this.index]);
-    $scope.map.panTo($scope.markers[this.index].getPosition());
+    	$scope.infoWindows[this.index].open($scope.map, $scope.markers[this.index]);
+    	$scope.map.panTo($scope.markers[this.index].getPosition());
 	};
 	
+	// A function to toggle marker animation
 	$scope.toggleBounce = function() {
-    if ($scope.markers[this.index].getAnimation() !== null) {
+    	if ($scope.markers[this.index].getAnimation() !== null) {
         	$scope.markers[this.index].setAnimation(null);
     	} else {
         	$scope.markers[this.index].setAnimation(google.maps.Animation.BOUNCE);
     	}
 	};
 
+	// Function that is going to be called on click of items in the search list
+	$scope.isClicked = function($index) {
+		self = $index;
+    	$scope.infoWindows[self].open($scope.map, $scope.markers[self]);
+    	$scope.map.panTo($scope.markers[self].getPosition());
+	};
+
+	// Function to bind markers titles to locations array
 	$scope.setLocations = function() {
 		for (i = 0; i < $scope.markers.length; i++) {
 			$scope.locations[i] = $scope.markers[i].title;
 		}
 	};
 
+	// Calling setLocations after a delay to account for AJAX delay
 	$timeout( function() {
 		$scope.setLocations();
 	}, 100);
 
+	// The callback for the Google Maps API
 	initMap = function() {
 
 		// Create the new map
@@ -59,7 +72,7 @@ app.controller('mainController', function($scope, $timeout) {
 	            content: locations[i].title
 	        });
 
-	        // Create onClick listeners
+	        // Create marker click listeners on the map
         	$scope.markers[i].addListener('click', $scope.markerClick);
         	$scope.markers[i].addListener('click', $scope.toggleBounce);
     	}

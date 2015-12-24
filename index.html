@@ -8,7 +8,6 @@
 	    <script src="scripts/locations.js"></script>
 	    <script src="https://maps.googleapis.com/maps/api/js?callback=initMap" async></script>
 	    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.8/angular.min.js"></script>
-	    
 	    <link rel="stylesheet" type="text/css" href="styles/style.css" media="screen" />
 	</head>
 
@@ -19,7 +18,7 @@
 			<div id="searchlist">
 				<p><strong>Key Locations</strong></p>
 				<ol ng-repeat="location in locations | filter: searchtext">
-					<li><a href="#">{{location}}</a></li>
+					<li ng-click="isClicked($index)"><a href="#">{{location}}</a></li>
 				</ol>
 			</div>
 
