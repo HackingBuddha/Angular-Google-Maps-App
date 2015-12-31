@@ -15,7 +15,7 @@ app.factory('wikiService', function($http) {
     return wikiService;
 });
 
-// Setup and angular controller and location names to the $scope
+// Setup an angular controller
 app.controller('MainController', function($scope, $timeout, wikiService) {
 
 	// Initialize variables
@@ -26,7 +26,7 @@ app.controller('MainController', function($scope, $timeout, wikiService) {
 	$scope.clicked = [];
 	$scope.wikiurls = [];
 
-	// Function that's going to be called when a marker is clicked on a map
+	// Function that's going to be called when a marker is clicked on the map
 	$scope.markerClick = function() {
 		self = this.index;
 		$scope.activateMarker(self);
@@ -82,6 +82,12 @@ app.controller('MainController', function($scope, $timeout, wikiService) {
 	        zoom: 2
 	    });
 
+	    // Google Maps api error handling
+	    if ($scope.map.length === 0) {
+	    	var gmError = document.createTextNode("Failed to download Google Maps data, please try again later");
+	        document.getElementById('map').appendChild(gmError);
+	    }
+
 	    // Iteratively call getWikiData
 	    for (i = 0; i < locations.length; i++) {
 			$scope.getWikiData(locations[i].title, i);
@@ -99,9 +105,14 @@ app.controller('MainController', function($scope, $timeout, wikiService) {
 
 	        	// Setup indexes for the markers
 	        	$scope.markers[i].index = i;
-				
-		        // Create info windows with wikipedia urls
-		        var infoContent = locations[i].title + '</br>' + '<a target="_blank" href=' + $scope.wikiurls[i] + '>' + 'Wiki Article' + '</a>';
+
+		        // Create info windows with wikipedia urls and error handling
+				var infoContent;
+				if ($scope.wikiurls.length != 0) {
+		        	infoContent = locations[i].title + '</br>' + '<a target="_blank" href=' + $scope.wikiurls[i] + '>' + 'Wiki Article' + '</a>';
+		        } else {
+		        	infoContent = "Failed to load wikipedia content, please try again later";
+		        }
 
 	 			$scope.infoWindows[i] = new google.maps.InfoWindow({
 		            content: infoContent
