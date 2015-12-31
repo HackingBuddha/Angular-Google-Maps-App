@@ -3,8 +3,20 @@ var initMap = function() {};
 // Setup and angular app
 var app = angular.module('app', []);
 
+app.factory('wikiService', function($http) {
+    
+    // Define a service to query wikipedia
+    var wikiService = {
+        get: function(location) {
+            return $http.jsonp('http://en.wikipedia.org/w/api.php?action=opensearch&search=' + location.toLowerCase() + '&format=json&callback=JSON_CALLBACK');
+        }
+    };
+    
+    return wikiService;
+});
+
 // Setup and angular controller and location names to the $scope
-app.controller('mainController', function($scope, $timeout) {
+app.controller('MainController', function($scope, $timeout, wikiService) {
 
 	// Initialize variables
 	$scope.map;
@@ -12,6 +24,7 @@ app.controller('mainController', function($scope, $timeout) {
 	$scope.infoWindows = [];
 	$scope.locations = [];
 	$scope.clicked = [];
+	$scope.wikiurls = [];
 
 	// Function that's going to be called when a marker is clicked on a map
 	$scope.markerClick = function() {
@@ -48,12 +61,19 @@ app.controller('mainController', function($scope, $timeout) {
 		}
 	};
 
-	// Calling setLocations after a delay to account for AJAX delay
-	$timeout( function() {
-		$scope.setLocations();
-	}, 100);
+	// Function that populates $scope.wikiurls array with data
+	$scope.getWikiData = function(title, index) {
+		wikiService.get(title).then(function(data) {
+    		$scope.wikiurls[index] = data.data[3][0];
+    	});
+	};
 
-	// The callback for the Google Maps API
+	// Calling setLocations after a delay to account for AJAX delay
+	$timeout(function() {
+		$scope.setLocations();
+	}, 650);
+
+	// The callback for Google Maps API
 	initMap = function() {
 
 		// Create the new map
@@ -62,24 +82,35 @@ app.controller('mainController', function($scope, $timeout) {
 	        zoom: 2
 	    });
 
-	    // Create Markers
-    	for (i = 0; i < locations.length; i++) {
-        	$scope.markers[i] = new google.maps.Marker({
-           		position: locations[i],
-            	map: $scope.map,
-            	title: locations[i].title,
-        	});
+	    // Iteratively call getWikiData
+	    for (i = 0; i < locations.length; i++) {
+			$scope.getWikiData(locations[i].title, i);
+		}
 
-        	// Setup indexes for the markers
-        	$scope.markers[i].index = i;
+		$timeout(function() {
+	    	for (i = 0; i < locations.length; i++) {
+	        	
+	        	// Create Markers
+	        	$scope.markers[i] = new google.maps.Marker({
+	           		position: locations[i],
+	            	map: $scope.map,
+	            	title: locations[i].title,
+	        	});
 
-	        // Create info windows
-	        $scope.infoWindows[i] = new google.maps.InfoWindow({
-	            content: locations[i].title
-	        });
+	        	// Setup indexes for the markers
+	        	$scope.markers[i].index = i;
+				
+		        // Create info windows with wikipedia urls
+		        var infoContent = locations[i].title + '</br>' + '<a target="_blank" href=' + $scope.wikiurls[i] + '>' + 'Wiki Article' + '</a>';
 
-	        // Create marker click listeners on the map
-        	$scope.markers[i].addListener('click', $scope.markerClick);
-    	}
+	 			$scope.infoWindows[i] = new google.maps.InfoWindow({
+		            content: infoContent
+		        });
+
+		        // Create marker click listeners on the map
+	        	$scope.markers[i].addListener('click', $scope.markerClick);
+	    	}
+	    }, 500);
 	};
+
 });
