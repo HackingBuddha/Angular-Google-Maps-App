@@ -71,7 +71,7 @@ app.controller('MainController', function($scope, $timeout, wikiService) {
 	// Calling setLocations after a delay to account for AJAX delay
 	$timeout(function() {
 		$scope.setLocations();
-	}, 650);
+	}, 750);
 
 	// The callback for Google Maps API
 	initMap = function() {
@@ -121,7 +121,7 @@ app.controller('MainController', function($scope, $timeout, wikiService) {
 		        // Create marker click listeners on the map
 	        	$scope.markers[i].addListener('click', $scope.markerClick);
 	    	}
-	    }, 500);
+	    }, 700);
 	};
 
 });

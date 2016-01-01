@@ -44,14 +44,6 @@ html, body {
 	display: inline;
 }
 
-#searchlist a {
-	color: blue;
-}
-
-#searchlist ol li :active {
-	color: green;
-}
-
 #map {
 	height: 100%;
 	width: 85%;
