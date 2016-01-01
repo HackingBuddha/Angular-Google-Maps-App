@@ -68,11 +68,6 @@ app.controller('MainController', function($scope, $timeout, wikiService) {
     	});
 	};
 
-	// Calling setLocations after a delay to account for AJAX delay
-	$timeout(function() {
-		$scope.setLocations();
-	}, 750);
-
 	// The callback for Google Maps API
 	initMap = function() {
 
@@ -81,12 +76,6 @@ app.controller('MainController', function($scope, $timeout, wikiService) {
 	        center: locations[0],
 	        zoom: 2
 	    });
-
-	    // Google Maps api error handling
-	    if ($scope.map.length === 0) {
-	    	var gmError = document.createTextNode("Failed to download Google Maps data, please try again later");
-	        document.getElementById('map').appendChild(gmError);
-	    }
 
 	    // Iteratively call getWikiData
 	    for (i = 0; i < locations.length; i++) {
@@ -121,7 +110,12 @@ app.controller('MainController', function($scope, $timeout, wikiService) {
 		        // Create marker click listeners on the map
 	        	$scope.markers[i].addListener('click', $scope.markerClick);
 	    	}
-	    }, 700);
+	    }, 500);
 	};
+
+	// Calling setLocations after a delay to account for AJAX delay
+	$timeout(function() {
+		$scope.setLocations();
+	}, 600);
 
 });
