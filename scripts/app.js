@@ -116,6 +116,6 @@ app.controller('MainController', function($scope, $timeout, wikiService) {
 	// Calling setLocations after a delay to account for AJAX delay
 	$timeout(function() {
 		$scope.setLocations();
-	}, 600);
+	}, 1000);
 
 });
